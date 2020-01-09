@@ -24,7 +24,8 @@ main =
 
 -- MODEL
 
-
+-- Alias Model as a record that has a field with type String.
+-- Records help for scaling and maintainability.
 type alias Model =
   { content : String
   }
@@ -47,6 +48,7 @@ update : Msg -> Model -> Model
 update msg model =
   case msg of
     Change newContent ->
+	  -- 
       { model | content = newContent }
 
 
