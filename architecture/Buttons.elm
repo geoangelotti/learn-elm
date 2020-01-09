@@ -16,6 +16,8 @@ import Html.Events exposing (onClick)
 
 
 -- MAIN
+-- main is a special value, it describes what is shown on screen.
+-- It needs an init value, a view function and an update function.
 
 
 main =
@@ -24,11 +26,13 @@ main =
 
 
 -- MODEL
+-- init is the data we use to initialize the application.
 
 
+-- Alias Model type as Int.
 type alias Model = Int
 
-
+-- Initialize the counter value.
 init : Model
 init =
   0
@@ -36,13 +40,16 @@ init =
 
 
 -- UPDATE
+-- How the Model changes over time.
 
-
+-- Alias Msg type as Increment or Decrement.
 type Msg
   = Increment
   | Decrement
 
-
+-- Handle messages.
+-- When we get a message, we execute update and generate a new Model then we view this new Model.
+-- function that takes a Msg gives a Model that gives a Model.
 update : Msg -> Model -> Model
 update msg model =
   case msg of
@@ -55,8 +62,9 @@ update msg model =
 
 
 -- VIEW
+-- What is displayed on screen.
 
-
+-- function that takes a Model and gives a HTML and Msg type values.
 view : Model -> Html Msg
 view model =
   div []
@@ -64,3 +72,11 @@ view model =
     , div [] [ text (String.fromInt model) ]
     , button [ onClick Increment ] [ text "+" ]
     ]
+-- onClick generates a message with value Decrement or Increment.
+
+-- 1. User input.
+-- 2. send message to update.
+-- 3. Produce new Model.
+-- 4. Call view and get a new HTML.
+-- 5. Display the HTML on screen.
+-- 6. Rinse and repeat.
