@@ -42,10 +42,11 @@ init =
 -- UPDATE
 -- How the Model changes over time.
 
--- Alias Msg type as Increment or Decrement.
+-- Alias Msg type as Increment, Decrement or Reset.
 type Msg
   = Increment
   | Decrement
+  | Reset
 
 -- Handle messages.
 -- When we get a message, we execute update and generate a new Model then we view this new Model.
@@ -58,7 +59,9 @@ update msg model =
 
     Decrement ->
       model - 1
-
+	
+	Reset ->
+	  0
 
 
 -- VIEW
@@ -71,8 +74,9 @@ view model =
     [ button [ onClick Decrement ] [ text "-" ]
     , div [] [ text (String.fromInt model) ]
     , button [ onClick Increment ] [ text "+" ]
+    , button [ onClick Reset] [ text "Reset"]
     ]
--- onClick generates a message with value Decrement or Increment.
+-- onClick generates a message with value Decrement, Increment or Reset.
 
 -- 1. User input.
 -- 2. send message to update.
