@@ -70,7 +70,11 @@ view model =
     [ viewInput "text" "Name" model.name Name
     , viewInput "password" "Password" model.password Password
     , viewInput "password" "Re-enter Password" model.passwordAgain PasswordAgain
-    , viewValidation model
+    , viewValidation (model.password == model.passwordAgain) "Passwords do not match!"
+    , viewValidation (String.length model.password >= 8) "Password is small!"
+    , viewValidation (String.any Char.isDigit model.password) "Password does not have at least a number!"
+    , viewValidation (String.any Char.isUpper model.password) "Password does not have at least an upper case character!"
+    , viewValidation (String.any Char.isLower model.password) "Password does not have at least an lower case character!"
     ]
 
 
@@ -78,15 +82,9 @@ viewInput : String -> String -> String -> (String -> msg) -> Html msg
 viewInput t p v toMsg =
   input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
-
-viewValidation : Model -> Html msg
-viewValidation model =
-    if (model.password == model.passwordAgain 
-	&& String.length model.password >= 8 
-	&& String.any Char.isDigit model.password 
-	&& String.any Char.isUpper model.password 
-	&& String.any Char.isLower model.password) then
-      div [ style "color" "green" ] [ text "Passwords OK" ]
+viewValidation : Bool -> String -> Html msg
+viewValidation boolean error =
+	if boolean then
+      div [ style "color" "green" ] [ text "OK" ]
     else
-      div [ style "color" "red" ] [ text "Passwords not OK" ]
-    
+      div [ style "color" "red" ] [ text error ]
