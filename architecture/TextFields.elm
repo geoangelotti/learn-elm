@@ -48,7 +48,7 @@ update : Msg -> Model -> Model
 update msg model =
   case msg of
     Change newContent ->
-	  -- 
+	  -- Save to Model a copy of model with the field content changed.
       { model | content = newContent }
 
 
@@ -60,5 +60,6 @@ view : Model -> Html Msg
 view model =
   div []
     [ input [ placeholder "Text to reverse", value model.content, onInput Change ] []
-    , div [] [ text (String.reverse model.content) ]
+    , div [] [ text ("Reversed: " ++ String.reverse model.content) ]
+    , div[] [text ("Length: " ++ String.fromInt (String.length model.content))]
     ]
